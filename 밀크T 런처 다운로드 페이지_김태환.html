@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>밀크T 런처 설치 페이지</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <!-- 귀여운 폰트 추가 -->
+  <link href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans', sans-serif;
+      text-align: center;
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      background: url('https://i.ibb.co/zT1f2HtD/image.jpg') no-repeat center center / cover;
+      color: #333;
+    }
+
+    /* 캐릭터, 말풍선, 텍스트 스타일은 그대로 유지 */
+    .logo-dumi, .logo-nyangi, .logo-tori, .thought-bubble, .bubble-text, .nyangi-text {
+      position: absolute;
+      z-index: 2;
+    }
+
+    .logo-dumi {
+      top: 0; left: -100px;
+      width: 500px; height: 500px;
+      object-fit: contain;
+    }
+
+    .logo-nyangi {
+      bottom: -50px; left: 600px;
+      width: 450px; height: 450px;
+      object-fit: contain;
+    }
+
+    .logo-tori {
+      bottom: -50px; right: 500px;
+      width: 450px; height: 450px;
+      object-fit: contain;
+    }
+
+    .thought-bubble {
+      top: 50px; left: 350px;
+      width: 170px; height: 170px;
+      animation: float 2s ease-in-out infinite, sparkle 1.5s ease-in-out infinite alternate;
+      cursor: pointer;
+      z-index: 3;
+    }
+
+    .bubble-text {
+      top: 80px; left: 230px;
+      width: 120px;
+      text-align: center;
+      font-family: 'Cute Font', cursive;
+      font-size: 24px;
+      line-height: 1.4;
+      color: #333;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .nyangi-text {
+      bottom: 220px; left: 580px;
+      width: 150px;
+      text-align: center;
+      font-family: 'Cute Font', cursive;
+      font-size: 24px;
+      line-height: 1.4;
+      color: #333;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    @keyframes float {
+      0%, 50%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-3px) rotate(-2deg); }
+      75% { transform: translateY(3px) rotate(2deg); }
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .content {
+      padding: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .button-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+      margin: 0 20px;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+      color: white;
+      padding: 18px 30px;
+      font-size: 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 15px;
+      text-decoration: none;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .btn i {
+      font-size: 24px;
+    }
+
+    /* 모달 스타일 */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 10;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slider {
+      position: relative;
+      width: 80%;
+      max-width: 800px;
+      height: 500px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slides img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      font-size: 30px;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .arrow.left { left: 10px; }
+    .arrow.right { right: 10px; }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+      z-index: 5;
+    }
+  </style>
+
+  <!-- FontAwesome 아이콘 -->
+  <script src="https://kit.fontawesome.com/a2d4cf1f5a.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <!-- 캐릭터 및 말풍선 -->
+  <img src="https://i.ibb.co/Kvptc7y/2.png" alt="듬이" class="logo-dumi">
+  <img src="https://i.ibb.co/Mk509qC3/image.png" alt="냥이" class="logo-nyangi">
+  <img src="https://i.ibb.co/LXZr9CK8/image.png" alt="토리" class="logo-tori">
+  <img src="https://i.ibb.co/Wq2xnjp/image.png" alt="생각하는 말풍선" class="thought-bubble" onclick="openModal()">
+
+  <div class="bubble-text">밀크T는 어떻게 <br>설치하는 걸까...</div>
+  <div class="nyangi-text">저 수상한<br>물음표를 눌러보자!</div>
+
+  <!-- 버튼 -->
+  <div class="content">
+    <div class="button-row">
+      <a href="https://m.milkt.co.kr/Common/CDataDown?txtFName=/edubank/Launcher/AnysupportMobile-old-target22.apk&compareHash=8ad56e50136b74f7de86e5f7d595748d" class="btn">
+        <i class="fas fa-download"></i> A6 원격 프로그램 다운로드
+      </a>
+      <a href="https://m.milkt.co.kr/Common/CDataDown?txtFName=/edubank/Launcher/AnysupportMobile-release-target23.apk&compareHash=ffb1d50a0fb54d8e969c08e93c83092c" class="btn">
+        <i class="fas fa-cloud-download-alt"></i> S6 원격 프로그램 다운로드
+      </a>
+      <a href="https://m.milkt.co.kr/Common/CDataDown?txtFName=/edubank/Launcher/MilkTLauncher.apk&compareHash=bae792c58f5b720c3bf778be8a72c6d0" class="btn">
+        <i class="fas fa-rocket"></i> 밀크T 런처 다운로드
+      </a>
+    </div>
+  </div>
+
+  <!-- 모달 (이미지 슬라이드) -->
+  <div class="modal" id="imageModal">
+    <div class="slider">
+      <div class="slides" id="slides">
+        <img src="https://i.ibb.co/1fsNkF9x/1.png" alt="1번 이미지">
+        <img src="https://i.ibb.co/MD3SbnPR/2.png" alt="2번 이미지">
+        <img src="https://i.ibb.co/dwSMcGVb/3.png" alt="3번 이미지">
+        <img src="https://i.ibb.co/XZGKSqPz/4.png" alt="4번 이미지">
+        <img src="https://i.ibb.co/whjMQxBt/5.png" alt="5번 이미지">
+        <img src="https://i.ibb.co/JRnBRDVZ/6.png" alt="6번 이미지">
+        <img src="https://i.ibb.co/xqYxTTxF/7.png" alt="7번 이미지">
+        <img src="https://i.ibb.co/8LhQNmNG/8.png" alt="8번 이미지">
+        <img src="https://i.ibb.co/GQ4YkxZV/9.png" alt="9번 이미지">
+        <img src="https://i.ibb.co/xPK6P9c/10.png" alt="10번 이미지">
+        <img src="https://i.ibb.co/SDwkZdc1/11.png" alt="11번 이미지">
+        <img src="https://i.ibb.co/QyxqHXN/12.png" alt="12번 이미지">
+        <img src="https://i.ibb.co/KzfZ56HM/13.png" alt="13번 이미지">
+        <img src="https://i.ibb.co/DP1nXRfW/14.png" alt="14번 이미지">
+        <img src="https://i.ibb.co/d0qmzyzv/15.png" alt="15번 이미지">
+        <img src="https://i.ibb.co/tp1NrxSF/16.png" alt="16번 이미지">
+      </div>
+      <button class="arrow left" onclick="prevSlide()">&#10094;</button>
+      <button class="arrow right" onclick="nextSlide()">&#10095;</button>
+    </div>
+    <span class="close" onclick="closeModal()">&times;</span>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+
+    function openModal() {
+      document.getElementById('imageModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').style.display = 'none';
+    }
+
+    function nextSlide() {
+      const slides = document.getElementById('slides');
+      const totalSlides = slides.children.length;
+      currentSlide = (currentSlide + 1) % totalSlides;
+      slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    function prevSlide() {
+      const slides = document.getElementById('slides');
+      const totalSlides = slides.children.length;
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+  </script>
+
+</body>
+</html>
